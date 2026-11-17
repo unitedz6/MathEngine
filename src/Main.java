@@ -14,6 +14,14 @@ public class Main {
 
             System.out.println(Statistics.returnRange(dataSet));
 
+            System.out.println("Sum:" + MathematicalOperations.add(5.0, 2.0));
+            System.out.println("Subtraction: " + MathematicalOperations.subtract(5.0, 2.0));
+            System.out.println("Division: " + MathematicalOperations.divide(10.0, 2.0));
+            System.out.println("Multiplication: " + MathematicalOperations.multiply(5.0, 2.0, 3));
+
+            System.out.println("Division: " + MathematicalOperations.divide(0, 0));
+            System.out.println("Division: " + MathematicalOperations.divide(10.0, 0));
+
             while (true) {
 
                 String input = scan.nextLine();
