@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.Scanner;
 import java.lang.reflect.Method;
@@ -21,6 +22,10 @@ public class Main {
 
             System.out.println("Division: " + MathematicalOperations.divide(0, 0));
             System.out.println("Division: " + MathematicalOperations.divide(10.0, 0));
+            Vectors v1 = new Vectors(new double[]{1,2,3});
+            Vectors v2 = new Vectors(new double[]{4,5,6});
+            Vectors addedVector = Vectors.returnAddedVectors(v1, v2);
+            System.out.println(Arrays.toString(addedVector.getVector()));
 
             while (true) {
 
