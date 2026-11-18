@@ -22,7 +22,9 @@ public class Matrix {
     }
 
     public void setCols(int col, double[] values){
-        this.data[col] = values;
+        for (int i = 0; i < data.length; i++) {
+            this.data[i][col] = values[i];
+        }
     }
 
     public void setElement(int row, int col, double values){
