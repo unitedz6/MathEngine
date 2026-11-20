@@ -1,5 +1,17 @@
 public class MathematicalOperations {
-    public static String[][] help = {};
+    public static String[][] help = {
+            {"add", "Adds two or more numerical values and returns their sum.",
+                    "sumar", "Suma dos o más valores numéricos y devuelve el resultado."},
+
+            {"subtract", "Subtracts numerical values in the specified order and returns the difference.",
+                    "restar", "Resta valores numéricos en el orden especificado y devuelve la diferencia."},
+
+            {"multiply", "Multiplies two or more numerical values and returns their product.",
+                    "multiplicar", "Multiplica dos o más valores numéricos y devuelve el producto."},
+
+            {"divide", "Divides numerical values in the specified order and returns the quotient.",
+                    "dividir", "Divide valores numéricos en el orden especificado y devuelve el cociente."},
+    };
 
     public static double squareRoot(double number) {
         return number;

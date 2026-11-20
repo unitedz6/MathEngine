@@ -15,7 +15,10 @@ public class ArrayOperations {
 
             {"sortAscending", "ordenarAscendente",
                     "Returns the dataset sorted from smallest to largest.",
-                    "Devuelve los datos ordenados de menor a mayor."}
+                    "Devuelve los datos ordenados de menor a mayor."},
+
+            {"toString", "Converts a numerical array into a formatted string for readable display in the terminal.",
+                "convertirAText", "Convierte un arreglo numérico en una cadena de texto con un formato legible para mostrarlo en la terminal.",}
     };
 
     public static double findMin(double[] data) {
@@ -73,5 +76,18 @@ public class ArrayOperations {
             }
         }
         return starting;
+    }
+
+    public static String toString(double[] data){
+        String result = "[";
+
+        for (int i = 0; i < data.length; i++){
+            result += data[i];
+
+            if (i < data.length - 1){
+                result += ", ";
+            }
+        }
+        return result +"]";
     }
 }
