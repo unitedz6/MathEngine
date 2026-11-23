@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.Scanner;
 import java.lang.reflect.Method;
@@ -10,9 +11,32 @@ public class Main {
         {
             Scanner scan = new Scanner(System.in);
             System.out.println("Statistical Analysis Project\n" + "Portafolio de análisis estadístico");
-            System.out.println("English or Spanish?\n/ will always be used to signify the start of a command"+"\nIngles o Espanol?\nEl símbolo / siempre se utilizará para indicar el inicio de un comando.");
+            System.out.println("English or Spanish?\n/ will always be used to signify the start of a command" + "\nIngles o Espanol?\nEl símbolo / siempre se utilizará para indicar el inicio de un comando.");
 
-            System.out.println(Statistics.returnRange(dataSet));
+
+            double[] scalars = {1, 2, 3};
+
+            Matrix m1 = new Matrix(new double[][]{
+                    {1, 2, 3},
+                    {3, 2, 1}
+            });
+
+            Matrix m2 = new Matrix(new double[][]{
+                    {1, 2, 3},
+                    {3, 2, 1},
+                    {1, 4, 2}
+            });
+
+
+            Vectors[] vectors = {
+                    new Vectors(new double[]{1, 2, 3}),
+                    new Vectors(new double[]{4, 6, 8}),
+                    new Vectors(new double[]{5, 10, 15})
+        };
+
+            Matrix resultingMatrix = Matrix.matrixMultiplication(m1, m2);
+
+            System.out.println("Performing Matrix Multiplication using m1, m2: \n" + (Matrix.toString(resultingMatrix)));
 
             while (true) {
 
