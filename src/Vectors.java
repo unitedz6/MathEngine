@@ -51,8 +51,6 @@ public class Vectors {
             };
 
 
-    // vectors, nx1
-
     public enum Orientation {
         ROW,
         COLUMN
@@ -60,7 +58,6 @@ public class Vectors {
 
     private double[] data;
     private Orientation orientation;
-    private final int cols = 1;
 
     public Vectors(double[] values) {
         this(values, Orientation.COLUMN);
@@ -129,13 +126,6 @@ public class Vectors {
         }
         return new Vectors(result);
     }
-
-
-    /*
-    public static Vectors convertMatrixToVectors(Vectors ...){
-
-    }
-     */
 
     // impelementation of overloading
     // one scalar, one vector
