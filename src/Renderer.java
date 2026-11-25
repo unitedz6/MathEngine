@@ -51,12 +51,27 @@ public class Renderer {
 
         mainFrame.setVisible(true);
 
+        Matrix vector = new Matrix(new double[][]{
+                {100}, {0}
+        });
+
+        double theta = MathematicalOperations.toRadians(45);
+        Matrix rotation = Matrix.rotationMatrix(theta);
+
+        vector = Matrix.matrixMultiplication(rotation, vector);
+
+        double x = vector.getElement(0, 0);
+        double y = vector.getElement(1, 0);
+
+        for (double t = 0; t <= 1; t += 0.001) {
+            generatePixel(
+                    (int) (PROGRAM_WIDTH / 2 + x * t), (int) (PROGRAM_HEIGHT / 2 - y * t), Color.white);
+        }
+
         textField.addActionListener(e -> {
             actionPerformed(textField, userText);
 
         });
-        drawCartesianPlane();
-
     }
 
 

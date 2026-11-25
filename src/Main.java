@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.Scanner;
 import java.lang.reflect.Method;
@@ -13,6 +14,9 @@ public class Main {
             System.out.println("English or Spanish?\n/ will always be used to signify the start of a command"+"\nIngles o Espanol?\nEl símbolo / siempre se utilizará para indicar el inicio de un comando.");
 
             System.out.println(Statistics.returnRange(dataSet));
+            System.out.println("Square Root: " + Arrays.toString(new double[]{MathematicalOperations.squareRoot(16)}));
+            System.out.println("Absolute value of -5: " + Arrays.toString(new double[]{MathematicalOperations.absolute(-5)}));
+            System.out.println("Sin 1:" + Arrays.toString(new double[]{MathematicalOperations.sin(1)}));
 
             while (true) {
 

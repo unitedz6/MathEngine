@@ -12,6 +12,23 @@ public class Matrix {
         this.cols = data[0].length;
     }
 
+    public static Matrix rotationMatrix(double theta) {
+        /*
+            R(THETA) = | cos(THETA), -sin(THETA) |
+                       | sin(THETA), cos(THETA)  |
+         */
+
+        return new Matrix(new double[][]{
+                {MathematicalOperations.cos(theta), -MathematicalOperations.sin(theta)},
+                {MathematicalOperations.sin(theta), MathematicalOperations.cos(theta)}
+        });
+    }
+
+
+    // scalar multiplication
+
+
+
 
     public static boolean isCorrectDimension(Matrix m1, Matrix m2){
         if (m1.getCols() == m2.getRows()) {
