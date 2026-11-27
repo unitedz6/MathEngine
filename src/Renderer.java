@@ -1,11 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 import java.awt.image.BufferedImage;
-import java.util.concurrent.TimeUnit;
-import java.nio.Buffer;
 
 public class Renderer {
+
+    static double zoom = 1.0;
 
     static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
@@ -33,7 +32,11 @@ public class Renderer {
             @Override
             protected void paintComponent(Graphics G) {
                 super.paintComponent(G);
-                G.drawImage(image, 0, 0, null);
+
+                Graphics2D g2 = (Graphics2D) G.create();
+                g2.scale(zoom, zoom);
+                g2.drawImage(image, 0, 0, null);
+                g2.dispose();
             }
         };
 
@@ -48,32 +51,47 @@ public class Renderer {
         mainFrame.add(mainPanel);
         mainFrame.add(userText, BorderLayout.NORTH);
         mainFrame.add(textField, BorderLayout.SOUTH);
+        mainPanel.setFocusable(true);
 
         mainFrame.setVisible(true);
 
-        Matrix vector = new Matrix(new double[][]{
-                {100}, {0}
-        });
-
-        double theta = MathematicalOperations.toRadians(45);
+        Vectors vector = new Vectors(new double[]{100, 0});
+        double theta = MathematicalOperations.toRadians(90);
         Matrix rotation = Matrix.rotationMatrix(theta);
 
-        vector = Matrix.matrixMultiplication(rotation, vector);
+        Matrix vectorMatrix = new Matrix(new double[][]{
+                {vector.getVectorX()},
+                {vector.getVectorY()}
+        });
 
-        double x = vector.getElement(0, 0);
-        double y = vector.getElement(1, 0);
+        Matrix resultingVector = Matrix.matrixMultiplication(rotation, vectorMatrix);
+        Vectors rotatedVector = new Vectors(new double[]{
+                resultingVector.getElement(0, 0),
+                resultingVector.getElement(1, 0)
+        });
 
-        for (double t = 0; t <= 1; t += 0.001) {
-            generatePixel(
-                    (int) (PROGRAM_WIDTH / 2 + x * t), (int) (PROGRAM_HEIGHT / 2 - y * t), Color.white);
-        }
+        createRope(rotatedVector, 4);
+
+        mainPanel.registerKeyboardAction(e-> {
+                    zoom *= 1.1;
+                    refresh();
+                }, KeyStroke.getKeyStroke("ctrl EQUALS"), JComponent.WHEN_IN_FOCUSED_WINDOW);
+
+        mainPanel.registerKeyboardAction(e-> {
+                zoom /= 1.1;
+                refresh();
+        }, KeyStroke.getKeyStroke("ctrl MINUS"), JComponent.WHEN_IN_FOCUSED_WINDOW);
+
+        textField.addActionListener(e-> {
+            actionPerformed(textField, userText);
+            mainPanel.requestFocusInWindow();
+        });
 
         textField.addActionListener(e -> {
             actionPerformed(textField, userText);
 
         });
     }
-
 
     public void toggleLightMode() {
 
@@ -86,34 +104,87 @@ public class Renderer {
     public static void generatePixel(int x, int y, Color color) {
         if (((x >= 0 && x < image.getWidth())) && (y >= 0 && y < image.getHeight())) {
             image.setRGB(x, y, color.getRGB());
-            refresh();
+        }
+    }
+    public static void createRope(Vectors vector, int physicsCircles) {
+
+        if (physicsCircles < 2) {
+            return;
+        }
+
+        double x = image.getWidth() / 2.0;
+        double y = image.getHeight() / 2.0;
+
+        double vectorLengthX = vector.getVectorX();
+        double vectorLengthY = vector.getVectorY();
+
+        double length = Vectors.getVectorLength(vector);// relative to the length of the vector itself, and physics circles
+
+        if (length == 0) {
+            return;
+        }
+
+        double spacing = length / (physicsCircles - 1);
+
+        double directionX = vectorLengthX / length;
+        double directionY = vectorLengthY / length;
+
+        int steps = (int) Math.ceil(length);
+
+
+        for (int i = 0; i <= steps; i++){
+
+            double t = (double) i / steps;
+
+            int pixelX = (int) MathematicalOperations.round(x+t*vectorLengthX);
+            int pixelY = (int) MathematicalOperations.round(y+t*vectorLengthY);
+
+            generatePixel(pixelX, pixelY, Color.WHITE);
+
+            for (int j = 0; j < physicsCircles; j++) {
+                double circleX = x + j * spacing * directionX;
+                double circleY = y + j * spacing * directionY;
+
+                createCircle(circleX, circleY, 3);
+            }
+        }
+        refresh();
+    }
+
+
+    public static void createCircle(double x, double y, double r) {
+
+        for (int i = 0; i <= 360; i++) {
+            double theta = MathematicalOperations.toRadians(i);
+
+            int pixelX = (int) Math.round((x + r * (MathematicalOperations.cos(theta))));
+            int pixelY = (int) Math.round((y + r * (MathematicalOperations.sin(theta))));
+
+            generatePixel(pixelX, pixelY, Color.red);
+        }
+        fillCircle(x,y,r);
+    }
+
+    public static void fillCircle(double posX, double posY, double r) {
+
+        int radius = (int) MathematicalOperations.ceil(r);
+
+        for (int y = -radius; y <= radius; y++){
+            for (int x = -radius; x <= radius; x++){
+
+                if (x*x+y*y<= r*r){
+                    generatePixel((int)MathematicalOperations.round(posX + x), (int)MathematicalOperations.round(posY + y), Color.red);
+                }
+            }
         }
     }
 
-    public static void drawCartesianPlane(){
+    public static void createCurvedLine(){
 
-        // create x-axis
-        for (int x = (PROGRAM_WIDTH / 4); x <= (PROGRAM_WIDTH * 3/4); x++) {
-            generatePixel(x, (PROGRAM_HEIGHT)/2, Color.blue);
-        }
-        // create x-dividers
-        int spacing = 25;
-        for (int x = (PROGRAM_WIDTH / 4); x <= (PROGRAM_WIDTH * 3/4); x+=spacing){
-            for (int y = PROGRAM_HEIGHT/2 - 5; y <= PROGRAM_HEIGHT/2 + 5; y++){
-                generatePixel(x, y, Color.WHITE);
-            }
-        }
+    }
 
-        // create y-axis
-        for (int y = (PROGRAM_HEIGHT / 4); y <= PROGRAM_HEIGHT * 3/4; y++) {
-            generatePixel((PROGRAM_WIDTH)/2, y, Color.red);
-        }
-        // create y-dividers
-        for (int y = ((PROGRAM_HEIGHT) / 4); y <= (PROGRAM_HEIGHT * 3/4); y+=spacing){
-            for (int x = PROGRAM_WIDTH/2 - 5; x <= PROGRAM_WIDTH/2+5; x++){
-                generatePixel(x, y, Color.white);
-            }
-        }
+    public static void createTriangle(){
+
     }
 
 

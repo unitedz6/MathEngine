@@ -42,6 +42,21 @@ public class MathematicalOperations {
         return result;
     }
 
+    // move to lowest integer
+    public static int floor(double x){
+        int result = (int) x;
+
+        if (x < result){
+            result--;
+        }
+        return result;
+    }
+
+
+    public static int round(double x){
+        return floor(x + 0.05);
+    }
+
     public static double exponent(double base, int power)  {
         double result = 1;
 
@@ -57,6 +72,14 @@ public class MathematicalOperations {
             result *= base;
         }
 
+        return result;
+    }
+
+    public static double ceil(double x){
+        int result = (int) x;
+        if (x > result){
+            result++;
+        }
         return result;
     }
 
