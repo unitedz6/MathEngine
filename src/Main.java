@@ -13,10 +13,15 @@ public class Main {
             System.out.println("Statistical Analysis Project\n" + "Portafolio de análisis estadístico");
             System.out.println("English or Spanish?\n/ will always be used to signify the start of a command"+"\nIngles o Espanol?\nEl símbolo / siempre se utilizará para indicar el inicio de un comando.");
 
-            System.out.println(Statistics.returnRange(dataSet));
-            System.out.println("Square Root: " + Arrays.toString(new double[]{MathematicalOperations.squareRoot(16)}));
-            System.out.println("Absolute value of -5: " + Arrays.toString(new double[]{MathematicalOperations.absolute(-5)}));
-            System.out.println("Sin 1:" + Arrays.toString(new double[]{MathematicalOperations.sin(1)}));
+            Matrix m = new Matrix(new double[][]{
+                    {2, 0, 4, 3},
+                    {5, 0, 2, 1},
+                    {3, 7, 6, 2},
+                    {1, 0, 3, 8}
+            });
+
+            System.out.println(Matrix.toString(Matrix.createSubMatrix(m)));
+
 
             while (true) {
 

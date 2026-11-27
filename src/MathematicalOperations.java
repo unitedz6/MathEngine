@@ -62,7 +62,7 @@ public class MathematicalOperations {
 
 
     public static int round(double x){
-        return floor(x + 0.05);
+        return floor(x + 0.5);
     }
 
     public static double exponent(double base, int power)  {

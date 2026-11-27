@@ -78,6 +78,47 @@ public class Statistics {
         return zScore;
     }
 
+    public static int returnFrequency(double[] data, double value){
+        int counter = 0;
+
+        for (int i = 0; i < data.length; i++){
+            if (data[i] == value){
+                counter++;
+            }
+        }
+        return counter;
+    }
+
+    public static int returnMaxFrequencyIndex(double[][] data, double value) {
+        int highestFreq = -1;
+        int bestIndex = 0;
+
+        for (int i = 0; i < data.length; i++) {
+            int currentFrequency = returnFrequency(data[i], value);
+
+            if (currentFrequency > highestFreq) {
+                highestFreq = currentFrequency;
+                bestIndex = i;
+            }
+        }
+        return bestIndex;
+    }
+
+    public static int returnMaxFrequencyIndex(Matrix m, double value) {
+        int highestFreq = -1;
+        int bestIndex = 0;
+
+        for (int i = 0; i < m.getCols(); i++) {
+            int currentFrequency = returnFrequency(m.getColumn(i), value);
+
+            if (currentFrequency > highestFreq) {
+                highestFreq = currentFrequency;
+                bestIndex = i;
+            }
+        }
+        return bestIndex;
+    }
+
     public static double returnMedian(double[] data){
         double[] medianData = new double[data.length];
         for (int i = 0; i < data.length; i++){

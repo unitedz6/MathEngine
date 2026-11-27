@@ -28,15 +28,76 @@ public class Matrix {
     // scalar multiplication
 
 
-
-
-    public static boolean isCorrectDimension(Matrix m1, Matrix m2){
+    public static boolean isCorrectDimension(Matrix m1, Matrix m2) {
         if (m1.getCols() == m2.getRows()) {
             System.out.println("Correct Dimension");
             return true;
         } else {
             System.out.println("Incorrect Dimension");
             return false;
+        }
+    }
+
+    public static boolean isCorrectDimension(Matrix m) {
+        return m.getRows() == m.getCols();
+    }
+
+    public static Matrix createSubMatrix(Matrix m){
+        int bestColumn = Statistics.returnMaxFrequencyIndex(m, 0);
+
+        System.out.println("The best column to delete is: " + bestColumn);
+        return m;
+    }
+
+
+    public static Matrix getMinor(Matrix m, int row, int col){
+        // remove row, col 0
+
+        double[][] minor = new double[m.getRows()-1][m.getCols()-1];
+
+        int minorRow = 0;
+
+        for (int i = 0; i < m.getRows(); i++){
+            if (i == row){
+                continue;
+            }
+            int minorCol = 0;
+
+            for (int j = 0; j < m.getCols(); j++){
+                if (j == col){
+                    continue;
+                }
+                minor[minorRow][minorCol] = m.getElement(i, j);
+
+                minorCol++;
+            }
+            minorRow++;
+        }
+        return new Matrix(minor);
+    }
+
+    public static double calculateDeterminant(Matrix m) {
+        int n = m.getRows();
+        if (!isCorrectDimension(m)) {
+            throw new IllegalArgumentException("Matrix must be square.");
+        } else {
+            // 1x1
+            if (n == 1){
+                return m.getElement(0, 0);
+                // 2x2
+            } else if (n == 2) {
+                return
+                        (m.getElement(0, 0) * m.getElement(1, 1)) - (m.getElement(0, 1) * m.getElement(1, 0));
+                // cofactor expansion
+            } else {
+                double determinantSum = 0;
+                 for (int j = 0; j < n; j++){
+                     determinantSum += MathematicalOperations.exponent(-1, j)
+                             * m.getElement(0, j)
+                             * calculateDeterminant(getMinor(m, 0, j));
+                 }
+                return determinantSum;
+            }
         }
     }
 
@@ -114,6 +175,14 @@ public class Matrix {
 
     public double getElement(int row, int col){
         return data[row][col];
+    }
+
+    public double[] getColumn(int col){
+        double[] column = new double[getRows()];
+        for (int i = 0; i < getRows(); i++){
+                column[i] = getElement(i, col);
+        }
+        return column;
     }
 
     public static String toString(Matrix m){

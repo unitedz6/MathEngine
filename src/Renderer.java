@@ -96,17 +96,17 @@ public class Renderer {
         Lighting light = new Lighting(
                 mouse.getMousePos(),
                 new Vectors(new double[]{0, 0}),
-                0.75,
+                1,
                 360,
                 100,
-                3.0,
+                1.0,
                 Color.white,
                 false,
                 true
         );
 
         double radius = 5.0;
-        double mass = Math.random();
+        double mass = 20;
 
        for (int i = 0; i < 5; i++){
            particles.add(new PhysicsParticles(
