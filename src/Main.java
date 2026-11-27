@@ -11,36 +11,12 @@ public class Main {
         {
             Scanner scan = new Scanner(System.in);
             System.out.println("Statistical Analysis Project\n" + "Portafolio de análisis estadístico");
-            System.out.println("English or Spanish?\n/ will always be used to signify the start of a command" + "\nIngles o Espanol?\nEl símbolo / siempre se utilizará para indicar el inicio de un comando.");
+            System.out.println("English or Spanish?\n/ will always be used to signify the start of a command"+"\nIngles o Espanol?\nEl símbolo / siempre se utilizará para indicar el inicio de un comando.");
 
-
-            double[] scalars = {1, 2, 3};
-
-            Vectors[] vectors = {
-                    new Vectors(new double[]{1, 2, 3}),
-                    new Vectors(new double[]{4, 6, 8}),
-                    new Vectors(new double[]{5, 10, 15})
-        };
-
-            Vectors v1 = new Vectors(new double[]{3, 3, 3});
-            Vectors v2 = new Vectors(new double[]{1, 10, 1});
-
-
-            System.out.println("Will be printing out vector(s) that we will be performing subtraction on: " + "\n" +
-                    "Vector 1: " + Vectors.toStringVector(v1) + "\n" + "Vector 2: " + Vectors.toStringVector(v2));
-            System.out.println("This results in: " + Vectors.toStringVector(Vectors.subtractVectors(v1, v2)));
-
-            Vectors[] vectorResults = Vectors.scalarMultiply(scalars, vectors);
-
-
-            for (int i = 0; i < vectorResults.length; i++){
-                System.out.println(
-                        "Our scalar(s) are: " + scalars[i] + "\n" +
-                                "Our vector(s) are: " + ArrayOperations.toString(vectors[i].getVector()) + "\n" +
-                                "and this scalar multiplication results in: \n" +
-                                ArrayOperations.toString(vectorResults[i].getVector())
-                );
-            }
+            System.out.println(Statistics.returnRange(dataSet));
+            System.out.println("Square Root: " + Arrays.toString(new double[]{MathematicalOperations.squareRoot(16)}));
+            System.out.println("Absolute value of -5: " + Arrays.toString(new double[]{MathematicalOperations.absolute(-5)}));
+            System.out.println("Sin 1:" + Arrays.toString(new double[]{MathematicalOperations.sin(1)}));
 
             while (true) {
 

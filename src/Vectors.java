@@ -87,6 +87,23 @@ public class Vectors {
         return this.data.clone();
     }
 
+    public double getVectorX(){
+        return data[0];
+    }
+
+    public double getVectorY(){
+        return data[1];
+    }
+
+    public static double getVectorLength(Vectors vector) {
+        double summation = 0;
+
+        for (int m = 0; m < vector.data.length; m++){
+            summation += MathematicalOperations.exponent(vector.data[m], 2);
+        }
+        return MathematicalOperations.squareRoot(summation);
+    }
+
     public int getDimension() {
         return this.data.length;
     }
@@ -229,5 +246,22 @@ public class Vectors {
             }
         }
         return result;
+    }
+
+
+    // physics stuff
+    public static Vectors displacement(PhysicsParticles particle){
+        return subtractVectors(particle.getCurrentPosition(), particle.getPreviousPosition());
+    }
+
+
+    public static Vectors velocity(PhysicsParticles particle, double previousTime, double currentTime){
+        return scalarMultiply(MathematicalOperations.divide(1.0, Physics.deltaTime(previousTime, currentTime)), displacement(particle));
+    }
+
+
+    // distance
+    public static double vectorDistance(Vectors v1, Vectors v2) {
+        return getVectorLength(subtractVectors(v1, v2));
     }
 }
